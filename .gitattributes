@@ -1,0 +1,36 @@
+# Auto-detect text files and normalise line endings on commit.
+* text=auto
+
+# Force LF for shell, Docker, YAML, JSON, and markdown
+*.sh         text eol=lf
+*.yml        text eol=lf
+*.yaml       text eol=lf
+*.json       text eol=lf
+*.md         text eol=lf
+Dockerfile   text eol=lf
+*.dockerfile text eol=lf
+.env.example text eol=lf
+
+# Force CRLF for Windows-only files
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Visual Studio / Rider / MSBuild files — use the OS default
+*.sln        text
+*.csproj     text
+*.props      text
+*.targets    text
+
+# Treat as binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary
+*.gz   binary
+*.dll  binary
+*.exe  binary
+*.so   binary
+*.pdb  binary

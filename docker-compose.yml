@@ -1,0 +1,39 @@
+version: '3.4'
+
+# All credentials are supplied via the .env file (copy .env.example to .env
+# locally and fill in real values). NEVER commit a populated .env file.
+
+services:
+  conterex_compliance.web:
+    image: ${DOCKER_REGISTRY-}conterex_compliance_web
+    container_name: conterex_compliance_web
+    build:
+      context: .
+      dockerfile: src/Conterex.Compliance.Web/Dockerfile
+    env_file: .env
+    environment:
+      - ConnectionStrings__Application=${DB_CONNECTION_STRING}
+      - Jwt__Issuer=${JWT_ISSUER}
+      - Jwt__Audience=${JWT_AUDIENCE}
+      - Jwt__SigningKey=${JWT_SIGNING_KEY}
+      - Jwt__AccessTokenLifetimeMinutes=${JWT_ACCESS_TOKEN_LIFETIME_MINUTES}
+      - Dev__Email=${DEV_USER_EMAIL}
+      - Dev__Password=${DEV_USER_PASSWORD}
+    ports:
+      - 5000:80
+      - 5001:443
+    depends_on:
+      - conterex_compliance.db
+
+  conterex_compliance.db:
+    image: postgres:13.2
+    container_name: conterex_compliance_db
+    env_file: .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./files/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

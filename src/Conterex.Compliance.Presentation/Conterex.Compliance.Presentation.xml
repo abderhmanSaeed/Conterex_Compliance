@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Conterex.Compliance.Presentation</name>
+    </assembly>
+    <members>
+        <member name="T:Conterex.Compliance.Presentation.Controllers.ApiController">
+            <summary>
+            Represents the base API controller.
+            </summary>
+        </member>
+        <member name="P:Conterex.Compliance.Presentation.Controllers.ApiController.Sender">
+            <summary>
+            Gets the sender.
+            </summary>
+        </member>
+        <member name="T:Conterex.Compliance.Presentation.Controllers.AuthController">
+            <summary>
+            Authentication endpoints. The login endpoint here is DEV-ONLY; it consults
+            the stubbed <c>IUserStore</c> (single hardcoded user from configuration).
+            Replace with a real identity module before any deployment outside local dev.
+            </summary>
+        </member>
+        <member name="M:Conterex.Compliance.Presentation.Controllers.AuthController.Login(Conterex.Compliance.Application.Authentication.Login.LoginCommand,System.Threading.CancellationToken)">
+            <summary>
+            Issues a JWT bearer access token for a valid email/password combination.
+            </summary>
+            <param name="command">Email + password.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>An access token plus its UTC expiry.</returns>
+        </member>
+        <member name="T:Conterex.Compliance.Presentation.Controllers.WebinarsController">
+            <summary>
+            Represents the webinars controller. The controller-level <c>[Authorize]</c>
+            attribute protects every endpoint by default; individual actions opt out
+            via <c>[AllowAnonymous]</c>.
+            </summary>
+        </member>
+        <member name="M:Conterex.Compliance.Presentation.Controllers.WebinarsController.GetWebinar(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Gets the webinar with the specified identifier, if it exists.
+            Anonymous access is permitted on this read endpoint as a worked example
+            of mixing protected and public endpoints in a single controller.
+            </summary>
+            <param name="webinarId">The webinar identifier.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The webinar with the specified identifier, if it exists.</returns>
+        </member>
+        <member name="M:Conterex.Compliance.Presentation.Controllers.WebinarsController.CreateWebinar(Conterex.Compliance.Application.Webinars.Commands.CreateWebinar.CreateWebinarRequest,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new webinar based on the specified request. Requires a valid JWT.
+            </summary>
+            <param name="request">The create webinar request.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The identifier of the newly created webinar.</returns>
+        </member>
+    </members>
+</doc>
